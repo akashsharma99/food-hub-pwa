@@ -40,30 +40,9 @@
     <!--recipes-->
     <div class="recipes container grey-text text-darken-1">
         
-        <div class="card-panel recipe white row">
-            <img src="/img/dish.png" alt="recipe thumb">
-            <div class="recipe-details">
-                <div class="recipe-title">Thanos Soup</div>
-                <div class="recipe-ingredients">Thanos head, Titan flowers, soul stone</div>
-            </div>
-            <div class="recipe-delete">
-                <i class="material-icons">delete_outline</i>
-            </div>
-        </div>
-
-        <div class="card-panel recipe white row">
-            <img src="/img/dish.png" alt="recipe thumb">
-            <div class="recipe-details">
-                <div class="recipe-title">Witch balls</div>
-                <div class="recipe-ingredients">Witch hair, broom dust, minced meat</div>
-            </div>
-            <div class="recipe-delete">
-                <i class="material-icons">delete_outline</i>
-            </div>
-        </div>
     </div>
     
-    <div class="center">
+    <div class="center mybutton">
         <a class="btn-floating btn-small add-btn sidenav-trigger" data-target="side-form">
             <i class="material-icons">add</i>
         </a>
@@ -86,7 +65,31 @@
             </div>
         </form>
     </div>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAN0Ifvx5VmnbifMZe4NA8SG15Hv7HyG-Q",
+    authDomain: "food-hub-pwa.firebaseapp.com",
+    databaseURL: "https://food-hub-pwa.firebaseio.com",
+    projectId: "food-hub-pwa",
+    storageBucket: "food-hub-pwa.appspot.com",
+    messagingSenderId: "151114447002",
+    appId: "1:151114447002:web:45f4a80724aee036"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db=firebase.firestore();
+</script>
+     <script src="/js/app.js"></script>
+    <script src="/js/db.js"></script>
     <script src="/js/ui.js"></script>
-    <script src="/js/app.js"></script>
 </body>
 </html>

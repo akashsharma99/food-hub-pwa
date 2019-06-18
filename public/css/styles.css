@@ -57,6 +57,9 @@ nav .sidenav-trigger{
     font-size: 0.8em;
 }
 /*form styles*/
+.mybutton{
+    margin-top: 10px;
+}
 .add-btn{
     background: var(--title) !important;
 }
