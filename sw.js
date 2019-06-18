@@ -1,5 +1,5 @@
-const staticCacheName = 'site-static-v2';
-const dynamicCache='site-dynamic-v2';
+const staticCacheName = 'site-static-v3';
+const dynamicCache='site-dynamic-v3';
 const assets = [
     '/',
     '/index.html',
@@ -9,6 +9,7 @@ const assets = [
     '/css/styles.css',
     '/css/materialize.css',
     '/img/dish.png',
+    '/pages/fallback.html',
     'https://fonts.googleapis.com/icon?family=Material+Icons',
     'https://fonts.gstatic.com/s/materialicons/v47/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2'
 ];
@@ -32,13 +33,23 @@ self.addEventListener('activate',evt=>{
         caches.keys().then(keys=>{
             //console.log(keys);
             return Promise.all(keys
-                .filter(key=>key!==staticCacheName)
+                .filter(key=>key!==staticCacheName && key !== dynamicCache)
                 .map(key=>caches.delete(key))
             )
         })
     );
 });
-
+//cache size limit
+const limitCacheSize = (name, size)=>{
+    caches.open(name)
+        .then(cache=>{
+            cache.keys().then(keys=>{
+                if(keys.length>size){
+                    cache.delete(keys[0]).then(limitCacheSize(name,size));
+                }
+            })
+        })
+}
 //fetch event
 self.addEventListener('fetch', (evt)=>{
     //console.log('fetch event', evt);
@@ -47,9 +58,14 @@ self.addEventListener('fetch', (evt)=>{
             return cacheResponse || fetch(evt.request).then(fetchResponse=>{
                 return caches.open(dynamicCache).then(cache=>{
                     cache.put(evt.request.url, fetchResponse.clone());
+                    limitCacheSize(dynamicCache,20);
                     return fetchResponse;
                 })
             });
+        }).catch(()=>{
+            if(evt.request.url.indexOf('.html')>-1){
+            return caches.match('/pages/fallback.html');
+            }
         })
     );
 });
